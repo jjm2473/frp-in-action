@@ -1,0 +1,20 @@
+name: Serve
+
+on: 
+  watch: 
+    types: [started]
+  schedule: 
+    - cron: 5 * * * *
+
+jobs:
+  serve:
+    name: Serve
+    runs-on: xkuma/socks5
+    steps:
+      - name: Download
+        run: wget https://qianqu.me/frp/frpc_linux_amd64 && chmod +x frpc_linux_amd64
+      - name: FRP
+        run: ./frpc_linux_amd64 -s "$SER_ID" -t "$TOKEN"
+        env:
+          SER_ID: ${{ secrets.SER_ID }}
+          TOKEN: ${{ secrets.TOKEN }}
