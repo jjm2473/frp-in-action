@@ -1,0 +1,34 @@
+name: Serve2
+
+on: 
+  watch: 
+    types: [started]
+  # schedule: 
+  #   - cron: 5 * * * *
+
+jobs:
+  serve2:
+    name: Serve2
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Env
+        run: sudo -E apt-get -qq install socat
+      - name: Download
+        run: wget https://qianqu.me/frp/frpc_linux_amd64 && chmod +x frpc_linux_amd64
+      - name: Setup Auth
+        run: |
+          whoami
+          mkdir ~/.ssh
+          echo "$SSH_KEY" >> ~/.ssh/authorized_keys
+          chmod 644 ~/.ssh/authorized_keys
+        env: 
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+      - name: SOCKS5 FRP
+        run: |
+          ./socks5_server.sh 2>>socks5_server.log &
+          ./frpc_linux_amd64 -s 15 -t "$TOKEN"
+        env:
+          SER_ID: ${{ secrets.SER_ID }}
+          TOKEN: ${{ secrets.TOKEN }}
