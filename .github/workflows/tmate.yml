@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Setup Tmate
         run: |
-          sudo apt-get install screen
+          sudo apt-get install screen socat
           wget https://github.com/tmate-io/tmate/releases/download/2.4.0/tmate-2.4.0-static-linux-amd64.tar.xz && \
           tar -xaf tmate-2.4.0-static-linux-amd64.tar.xz && \
           ln -s tmate-2.4.0-static-linux-amd64/tmate
@@ -38,6 +38,4 @@ jobs:
           done
           cat tmate.log
       - name: Serving
-        run: |
-          echo "int isatty(int fd) { return 1; }" | gcc -O2 -fpic -shared -ldl -o isatty.so -xc -
-          LD_PRELOAD=./isatty.so screen -r tmate
+        run: socat EXEC:"screen -r tmate",pty GOPEN:/dev/null
