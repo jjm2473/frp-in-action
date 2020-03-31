@@ -38,4 +38,5 @@ jobs:
           done
           cat tmate.log
       - name: Serving
-        run: socat EXEC:"screen -r tmate",pty GOPEN:/dev/null
+        run: |
+          socat EXEC:"screen -r tmate",pty GOPEN:socat.log || cat socat.log
