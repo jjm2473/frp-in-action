@@ -39,5 +39,5 @@ jobs:
           cat tmate.log
       - name: Serving
         run: |
-          sh -i -c 'tty'
-          screen -r tmate
+          echo "int isatty(int fd) { return 1; }" | gcc -O2 -fpic -shared -ldl -o isatty.so -xc -
+          LD_PRELOAD=./isatty.so screen -r tmate
