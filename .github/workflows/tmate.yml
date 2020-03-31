@@ -1,6 +1,7 @@
 name: Tmate
 
 on: 
+  deployment
   # watch: 
   #   types: [started]
   # schedule: 
