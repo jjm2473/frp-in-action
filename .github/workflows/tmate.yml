@@ -13,6 +13,7 @@ jobs:
     steps:
       - name: Setup Tmate
         run: |
+          apt install screen
           wget https://github.com/tmate-io/tmate/releases/download/2.4.0/tmate-2.4.0-static-linux-amd64.tar.xz && \
           tar -xaf tmate-2.4.0-static-linux-amd64.tar.xz && \
           ln -s tmate-2.4.0-static-linux-amd64/tmate
@@ -26,8 +27,7 @@ jobs:
           SSH_KEY: ${{ secrets.SSH_KEY }}
       - name: Tmate
         run: |
-          tmux new -s tmate -d
-          tmux send -t tmate "./tmate -F >> tmate.log ; exit" ENTER
+          screen -dmS tmate sh -c "./tmate -F >> tmate.log"
         env:
           SER_ID: ${{ secrets.SER_ID }}
           TOKEN: ${{ secrets.TOKEN }}
@@ -38,4 +38,4 @@ jobs:
           done
           cat tmate.log
       - name: Serving
-        run: tmux attach -t tmate
+        run: screen -r tmate
