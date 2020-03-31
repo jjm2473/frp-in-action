@@ -18,7 +18,7 @@ jobs:
           whoami
           mkdir ~/.ssh
           echo "$SSH_KEY" >> ~/.ssh/authorized_keys
-          chmod 600 ~/.ssh/authorized_keys
+          chmod 644 ~/.ssh/authorized_keys
         env: 
           SSH_KEY: ${{ secrets.SSH_KEY }}
       - name: FRP
