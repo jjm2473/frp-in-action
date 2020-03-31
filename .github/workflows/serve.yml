@@ -9,7 +9,7 @@ on:
 jobs:
   serve:
     name: Serve
-    runs-on: xkuma/socks5
+    runs-on: ubuntu-18.04
     steps:
       - name: Download
         run: wget https://qianqu.me/frp/frpc_linux_amd64 && chmod +x frpc_linux_amd64
