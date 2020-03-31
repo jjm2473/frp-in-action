@@ -1,8 +1,8 @@
 name: Tmate
 
 on: 
-  watch: 
-    types: [started]
+  # watch: 
+  #   types: [started]
   # schedule: 
   #   - cron: 5 * * * *
 
@@ -39,6 +39,6 @@ jobs:
           cat tmate.log
       - name: Serving
         run: |
-          while screen -ls | grep tmate; do
+          while screen -ls | grep -q tmate; do
             sleep 5
           done
