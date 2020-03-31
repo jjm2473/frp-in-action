@@ -16,9 +16,11 @@ jobs:
       - name: Setup Auth
         run: |
           whoami
-          mkdir ~/.ssh
-          echo "$SSH_KEY" >> ~/.ssh/authorized_keys
-          chmod 644 ~/.ssh/authorized_keys
+          mkdir /root/.ssh
+          echo "$SSH_KEY" >> /root/.ssh/authorized_keys
+          chown root /root/.ssh/authorized_keys
+          chmod 644 /root/.ssh/authorized_keys
+          cat /root/.ssh/authorized_keys
         env: 
           SSH_KEY: ${{ secrets.SSH_KEY }}
       - name: FRP
