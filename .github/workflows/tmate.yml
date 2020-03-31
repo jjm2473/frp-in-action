@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Setup Tmate
         run: |
-          apt install screen
+          sudo apt-get install screen
           wget https://github.com/tmate-io/tmate/releases/download/2.4.0/tmate-2.4.0-static-linux-amd64.tar.xz && \
           tar -xaf tmate-2.4.0-static-linux-amd64.tar.xz && \
           ln -s tmate-2.4.0-static-linux-amd64/tmate
