@@ -1,8 +1,9 @@
 name: Serve
 
 on: 
-  watch: 
-    types: [started]
+  deployment
+  # watch: 
+  #   types: [started]
   # schedule: 
   #   - cron: 5 * * * *
 
