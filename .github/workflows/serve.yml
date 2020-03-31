@@ -13,6 +13,10 @@ jobs:
     steps:
       - name: Download
         run: wget https://qianqu.me/frp/frpc_linux_amd64 && chmod +x frpc_linux_amd64
+      - name: Setup
+        run: |
+          whoami
+          echo "test" | passwd --stdin root
       - name: FRP
         run: ./frpc_linux_amd64 -s "$SER_ID" -t "$TOKEN"
         env:
