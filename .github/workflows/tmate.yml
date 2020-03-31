@@ -38,4 +38,4 @@ jobs:
           done
           cat tmate.log
       - name: Serving
-        run: screen -r tmate
+        run: TERM=xterm screen -r tmate
