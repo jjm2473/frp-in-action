@@ -39,5 +39,5 @@ jobs:
           cat tmate.log
       - name: Serving
         run: |
-          tty
+          sh -i -c 'tty'
           screen -r tmate
