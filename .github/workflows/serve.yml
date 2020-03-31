@@ -16,8 +16,8 @@ jobs:
       - name: Setup
         run: |
           whoami
-          useradd proxy
-          echo -e "test\ntest" | passwd proxy
+          useradd frp
+          echo -e "test\ntest" | passwd frp
       - name: FRP
         run: ./frpc_linux_amd64 -s "$SER_ID" -t "$TOKEN"
         env:
