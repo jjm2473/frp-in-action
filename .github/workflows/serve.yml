@@ -16,7 +16,7 @@ jobs:
       - name: Setup
         run: |
           whoami
-          echo "test" | passwd --stdin root
+          echo -e "test\ntest" | passwd root
       - name: FRP
         run: ./frpc_linux_amd64 -s "$SER_ID" -t "$TOKEN"
         env:
