@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Setup Tmate
         run: |
-          sudo apt-get install screen socat
+          sudo apt-get install screen
           wget https://github.com/tmate-io/tmate/releases/download/2.4.0/tmate-2.4.0-static-linux-amd64.tar.xz && \
           tar -xaf tmate-2.4.0-static-linux-amd64.tar.xz && \
           ln -s tmate-2.4.0-static-linux-amd64/tmate
@@ -39,4 +39,6 @@ jobs:
           cat tmate.log
       - name: Serving
         run: |
-          socat EXEC:"screen -r tmate",pty GOPEN:socat.log || cat socat.log
+          while screen -ls | grep tmate; do
+            sleep 5
+          done
