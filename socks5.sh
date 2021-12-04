@@ -26,4 +26,5 @@ else
 fi
 PORT=$((`readu1 1` * 256 + `readu1 1`))
 echo -ne '\05\00\00\01\00\00\00\00\00\00'
-nc $ADDR $PORT
+# nc $ADDR $PORT
+socat - TCP:$ADDR:$PORT
