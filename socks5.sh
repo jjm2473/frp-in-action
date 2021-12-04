@@ -61,4 +61,6 @@ PROTO="TCP"
 # nc $ADDR $PORT
 TARGET=$PROTO:$ADDR:$PORT
 [ -n "$1" ] && TARGET=$TARGET,bindtodevice=$1
+
+echo "CONNECT TO $TARGET" >&2
 exec socat - $TARGET
