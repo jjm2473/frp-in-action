@@ -6,7 +6,7 @@ readbytes() {
 }
 
 readu1() {
-    readbytes $1 | hexdump -ve '1/1 " %d"' | dd bs=1 skip=1 2>/dev/null
+    readbytes $1 | hexdump -ve '1/1 " %u"' | dd bs=1 skip=1 2>/dev/null
 }
 
 skipver() {
