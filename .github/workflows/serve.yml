@@ -1,0 +1,35 @@
+name: Serve
+
+on: 
+  workflow_dispatch:
+  # schedule:
+  #   - cron: 5 * * * *
+
+jobs:
+  serve:
+    name: Serve
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+        with:
+          fetch-depth: 1
+      - name: Env
+        run: sudo -E apt-get -qq install socat
+      - name: Download
+        run: |
+          mkdir frp
+          cd frp
+          wget https://github.com/fatedier/frp/releases/download/v0.34.3/frp_0.34.3_linux_amd64.tar.gz
+          tar -xzf frp_*_linux_amd64.tar.gz --strip-components 1
+      - name: Go
+        run: |
+          # socks5
+          socat TCP-LISTEN:1080,bind=127.0.0.1,fork,reuseaddr EXEC:./socks5.sh &
+          # ws tunnel
+          ./tcp_2_ws.sh 7000 ${WS_URL} &
+          # frpc
+          ./frp/frpc -c ./frpc.ini
+        env: 
+          WS_URL: ${{ secrets.WS_URL }}
+
