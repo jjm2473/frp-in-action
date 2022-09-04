@@ -15,7 +15,7 @@ jobs:
         with:
           fetch-depth: 1
       - name: Env
-        run: sudo -E apt-get -qq install socat
+        run: sudo -E apt-get -qq install socat wget
       - name: Download
         run: |
           mkdir frp
@@ -24,6 +24,7 @@ jobs:
           tar -xzf frp_*_linux_amd64.tar.gz --strip-components 1
       - name: Go
         run: |
+          [ -n "$WS_URL" ]
           # socks5
           socat TCP-LISTEN:1080,bind=127.0.0.1,fork,reuseaddr EXEC:./socks5.sh &
           # ws tunnel
