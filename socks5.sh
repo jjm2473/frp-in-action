@@ -11,7 +11,7 @@ readu1() {
 
 skipver() {
     local ver=`readu1 1`
-    if [ $ver -ne 5 ]; then
+    if [ "$ver" -ne 5 ]; then
         echo "Unsupported Version $VER" >&2
         exit 1
     fi
@@ -23,9 +23,12 @@ skipver
 
 # client supported METHODS_COUNT
 NM=`readu1 1`
+[ -z "$NM" ] && exit 1
 
 # read all client supported METHODS and ignore
-[ $NM -gt 0 ] && readbytes $NM >/dev/null
+if [ $NM -gt 0 ]; then
+    [ `readbytes $NM | wc -c` -ne $NM ] && exit 1
+fi
 
 ## handshake resp
 # tell client we only support SOCKS5 (0x05) None auth (0x00)
@@ -35,7 +38,7 @@ echo -ne '\05\00'
 # skip VERSION, get COMMAND, skip RSV
 skipver
 COMMAND=`readu1 1`
-if [ $COMMAND -ne 1 -a $COMMAND -ne 3 ]; then
+if [ -z "$COMMAND" ] || [ "$COMMAND" -ne 1 -a "$COMMAND" -ne 3 ]; then
     echo "Unknown COMMAND $COMMAND" >&2
     # not supportd command
     echo -ne '\05\07\00\01\00\00\00\00\00\00'
@@ -47,12 +50,12 @@ readbytes 1 >/dev/null
 AT=`readu1 1`
 ADDR=""
 
-if [ $AT == 3 ]; then
+if [ "$AT" == 3 ]; then
     # if named address, read host length
     HL=`readu1 1`
     # read host
     ADDR=`readbytes $HL`
-elif [ $AT == 1 ]; then
+elif [ "$AT" == 1 ]; then
     # else ipv4 address
     ADDR=`readu1 4 | sed 's/ /./g'`
 else
