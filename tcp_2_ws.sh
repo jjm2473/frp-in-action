@@ -8,4 +8,4 @@ url=$2
 
 url=`echo "$url" | sed 's/:/\\\\:/g'`
 
-socat tcp-listen:$port,fork,reuseaddr exec:"./ws_connect.sh $url"
+socat tcp-listen:$port,bind=127.0.0.1,fork,reuseaddr exec:"./ws_connect.sh $url"
