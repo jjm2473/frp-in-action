@@ -25,12 +25,13 @@ jobs:
       - name: Go
         run: |
           [ -n "$WS_URL" ]
-          # socks5
-          socat TCP-LISTEN:1080,bind=127.0.0.1,fork,reuseaddr EXEC:./socks5.sh &
           # ws tunnel
           ./tcp_2_ws.sh 7000 ${WS_URL} &
+          sleep 2
           # frpc
-          ./frp/frpc -c ./frpc.ini
-        env: 
+          ./frp/frpc -c ./frpc.ini &
+          # socks5
+          socat TCP-LISTEN:1080,bind=127.0.0.1,fork,reuseaddr EXEC:./socks5.sh
+        env:
           WS_URL: ${{ secrets.WS_URL }}
 
