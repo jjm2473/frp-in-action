@@ -1,0 +1,26 @@
+name: Shell
+
+on: 
+  workflow_dispatch:
+  # schedule:
+  #   - cron: 5 * * * *
+
+jobs:
+  shell:
+    name: Shell
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+        with:
+          fetch-depth: 1
+      - name: Env
+        run: sudo -E apt-get -qq install socat
+      - name: Go
+        run: |
+          [ -n "$WS_URL" ]
+          # ws tunnel to shell
+          ./shell_2_ws.sh 7000 ${WS_URL}/shell
+        env:
+          WS_URL: ${{ secrets.WS_URL }}
+

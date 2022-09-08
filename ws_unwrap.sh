@@ -10,8 +10,15 @@ readHeaders() {
     done
 }
 
+handle_preheader() {
+    export "HTTP_METHOD=$1"
+    export "URL_PATH=$2"
+}
+
 read LINE
 [ -z "$LINE" ] && exit 1
+
+handle_preheader $LINE
 
 readHeaders
 
