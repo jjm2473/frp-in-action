@@ -20,7 +20,7 @@ jobs:
         run: |
           [ -n "$WS_URL" ]
           # ws tunnel to shell
-          ./shell_2_ws.sh 7000 ${WS_URL}/shell
+          ./shell_2_ws.sh ${WS_URL}/shell
         env:
           WS_URL: ${{ secrets.WS_URL }}
 
