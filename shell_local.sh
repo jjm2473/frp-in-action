@@ -22,4 +22,7 @@ json2line() {
 
 json2line > /var/etc/remote_hosts.txt.new
 
-[ -s /var/etc/remote_hosts.txt.new ] && cat /var/etc/remote_hosts.txt.new > /var/etc/remote_hosts.txt
+if [ -s /var/etc/remote_hosts.txt.new ];then
+    cat /var/etc/remote_hosts.txt.new > /var/etc/remote_hosts.txt
+    /etc/init.d/dnsmasq reload
+fi
