@@ -3,7 +3,7 @@ name: Shell
 on: 
   workflow_dispatch:
   schedule:
-    - cron: 3 22 * * *
+    - cron: 3 22,10 * * *
 
 jobs:
   shell:
